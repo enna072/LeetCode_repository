@@ -1,0 +1,49 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class ChatServer {
+    public static int lx;
+    public static int ly;
+    public static int destx;
+    public static int desty;
+
+    public static void the_maze(int x, int y, String str, int[][] maze) {
+
+        if (x == destx && y == desty) {
+            System.out.println(str + "->" + String.format("(%d,%d)", x, y));
+            return;
+        }
+        if (x < 0 || x == lx || y < 0 || y == ly || maze[x][y] == 0 || maze[x][y] == -1) {
+
+            return;
+        }
+        maze[x][y] = -1;
+        str = str + "->" + String.format("(%d,%d)", x, y);
+        the_maze(x + 1, y, str, maze);
+        the_maze(x - 1, y, str, maze);
+        the_maze(x, y + 1, str, maze);
+        the_maze(x, y - 1, str, maze);
+
+        maze[x][y] = 1;
+
+    }
+
+    public static void main(String[] args) {
+        int[][] maze = {
+                { 1, 1, 0, 0, 0 },
+                { 1, 1, 1, 0, 1 },
+                { 0, 0, 1, 0, 1 },
+                { 0, 0, 1, 1, 1 },
+                { 0, 0, 0, 0, 1 }
+        };
+        lx = maze.length;
+        ly = maze[0].length;
+
+        destx = 1;
+        desty = 1;
+        the_maze(4, 4, "", maze);
+
+    }
+
+}
